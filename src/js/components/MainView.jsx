@@ -1,4 +1,4 @@
-define(['lodash', 'react', 'reactDOM', 'router'], function (_, React, ReactDOM, ReactRouter) {
+define(['lodash', 'react', 'reactDOM', 'router', 'components/component/AppToDo'], function (_, React, ReactDOM, ReactRouter, AppToDo) {
     'use strict';
 
     var Router = ReactRouter.Router;
@@ -10,7 +10,6 @@ define(['lodash', 'react', 'reactDOM', 'router'], function (_, React, ReactDOM, 
         render: function () {
             return (
                 <div>
-                    <img src="./resources/logo.jpg"/>
                     <h1>MarkBook</h1>
                 </div>
             );
@@ -51,7 +50,7 @@ define(['lodash', 'react', 'reactDOM', 'router'], function (_, React, ReactDOM, 
             if (this.validateUserCredentials()) {
                 this.history.push('/main');
             } else {
-                this.setState({errorMsg: 'Wrong e-mail/password'});
+                this.setState({errorMsg: 'Wrong e-mail/password !!!'});
             }
         },
         goToSignUp: function () {
@@ -201,6 +200,7 @@ define(['lodash', 'react', 'reactDOM', 'router'], function (_, React, ReactDOM, 
                     <Route path="/" component={LoginPage}/>
                     <Route path="/signup" component={SignUpPage}/>
                     <Route path="/main" component={MainApp}/>
+                    <Route path="/todo" component={AppToDo}/>
                 </Router>
             );
         }

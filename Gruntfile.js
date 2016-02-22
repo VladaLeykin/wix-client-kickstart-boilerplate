@@ -69,20 +69,6 @@ module.exports = function (grunt) {
                         dest: 'build/index.html'
                     }
                 ]
-            },
-            dist: {
-                files: [
-                    {
-                        src: 'build/vendor/require.js',
-                        dest: 'dist/vendor/require.js'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'build/img/',
-                        src: '**/*',
-                        dest: 'dist/img'
-                    }
-                ]
             }
         },
         eslint: {
@@ -116,6 +102,7 @@ module.exports = function (grunt) {
                     'src/**/*.css',
                     'src/**/*.jsx',
                     'src/js/**/*.js',
+                    'tests/**/*.js',
                     '!src/js/components/**/*.js',
                     '!src/js/*.js',
                     'Gruntfile.js'
@@ -171,32 +158,6 @@ module.exports = function (grunt) {
                 configFile: 'karma.conf.js',
                 browser: ['Chrome']
             }
-        },
-        umd: {
-            //all: {
-            //    options: {
-            //        src: 'node_modules/react-stub-context/dist/index.js',
-            //        dest: VENDOR_TARGET + 'stubContext.js',
-            //        objectToExport: 'stubContext',
-            //        amdModuleId: 'stubContext',
-            //        deps: {
-            //            'default': ['react', 'require', 'exports', 'module'],
-            //            amd: ['react', 'require', 'exports', 'module']
-            //        }
-            //    }
-            //},
-            //Firebase: {
-            //    options: {
-            //        src: 'node_modules/firebase/lib/firebase-web.js',
-            //        dest: VENDOR_TARGET + 'firebase.js',
-            //        objectToExport: 'Firebase',
-            //        amdModuleId: 'Firebase',
-            //        deps: {
-            //            'default': ['require', 'exports', 'module'],
-            //            amd: ['require', 'exports', 'module']
-            //        }
-            //    }
-            //}
         }
     });
     grunt.loadNpmTasks('grunt-scss-lint');
@@ -209,6 +170,6 @@ module.exports = function (grunt) {
     grunt.registerTask('lint', ['eslint']);
     grunt.registerTask('compile', ['babel']);
     grunt.registerTask('test', ['karma']);
-    grunt.registerTask('build', ['lint', 'clean:build', 'compile', 'copy:build']);
+    grunt.registerTask('build', ['clean:build', 'compile', 'copy:build']);
     grunt.registerTask('default', ['build', 'test']);
 };
