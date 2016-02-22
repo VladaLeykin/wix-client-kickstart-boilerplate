@@ -5,17 +5,23 @@ define([ 'lodash', 'React', 'reactDOM', 'components/component/Item'],
         var TestUtils = React.addons.TestUtils;
 
         describe('Item in To Do List', function () {
+            var parentMock = {
+                setItemStatus: function() { }
+            };
+
+            beforeEach(function() {
+                spyOn(parentMock, 'setItemStatus');
+
+            });
+
 
             function getDemoItemInstance()
             {
                 var key = _.uniqueId();
-                var setItemStatus = function(index, newStatus)
-                {console.log('Task ' + index + ' got new status ' + newStatus )};
-
                 return (<Item key={key}
                                       index={key}
                                       data={{done: true, title: 'my first task!'}}
-                                      setItemStatus = {setItemStatus}/>);
+                                      setItemStatus = {parentMock.setItemStatus}/>);
             }
 
             function getStyleofRenderedToDoItem(isDone)
@@ -26,7 +32,7 @@ define([ 'lodash', 'React', 'reactDOM', 'components/component/Item'],
 
                 var instance = (<Item key={key}
                                       index={key}
-                                      data={{done: isDone, title: 'my first task!'}}
+                                      data={{done: isDone, title: 'my first task!!'}}
                                       setItemStatus = {setItemStatus}/>);
 
                 var renderer = TestUtils.createRenderer();
@@ -42,11 +48,19 @@ define([ 'lodash', 'React', 'reactDOM', 'components/component/Item'],
                 expect(getStyleofRenderedToDoItem(true)).toEqual({textDecoration: "line-through"});
             });
 
-            it('should get defined callback', function () {
-                var renderer = TestUtils.createRenderer();
-                renderer.render(getDemoItemInstance());
-                var props = renderer.getRenderOutput().props;
-                expect(props.onClick).toBeDefined();
+            //not useful
+            //it('should get defined callback', function () {
+            //    var renderer = TestUtils.createRenderer();
+            //    renderer.render(getDemoItemInstance());
+            //    var props = renderer.getRenderOutput().props;
+            //    expect(props.onClick).toBeDefined();
+            //});
+
+            it('should call the callback on click', function () {
+                var comp = TestUtils.renderIntoDocument(getDemoItemInstance());
+                var node = ReactDOM.findDOMNode(comp);
+                TestUtils.Simulate.click(node);
+                expect(parentMock.setItemStatus).toHaveBeenCalledWith(comp.props.index, !comp.props.data.done);
             });
         });
 

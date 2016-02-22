@@ -115,7 +115,7 @@ module.exports = function (grunt) {
                     '!src/js/*.js',
                     'Gruntfile.js'
                 ],
-                tasks: ['default'],
+                tasks: ['build'],
                 options: {
                     debounceDelay: 500
                 }
