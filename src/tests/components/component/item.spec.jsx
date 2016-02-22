@@ -5,38 +5,48 @@ define([ 'lodash', 'React', 'reactDOM', 'components/component/Item'],
         var TestUtils = React.addons.TestUtils;
 
         describe('Item in To Do List', function () {
-            it('should be without line-through decoration when not done', function () {
+
+            function getDemoItemInstance()
+            {
                 var key = _.uniqueId();
                 var setItemStatus = function(index, newStatus)
                 {console.log('Task ' + index + ' got new status ' + newStatus )};
 
-                var instance = (<Item key={key}
-                index={key}
-                data={{done: false, title: 'my first task!'}}
-                setItemStatus ={setItemStatus}/>);
+                return (<Item key={key}
+                                      index={key}
+                                      data={{done: true, title: 'my first task!'}}
+                                      setItemStatus = {setItemStatus}/>);
+            }
 
-                var renderer = TestUtils.createRenderer();
-                renderer.render(instance);
-                var actual = renderer.getRenderOutput().props.style;
-                var expected = {textDecoration: "none"};
-                expect(actual).toEqual(expected);
-            });
-
-            it('should be with line-through decoration when done', function () {
+            function getStyleofRenderedToDoItem(isDone)
+            {
                 var key = _.uniqueId();
                 var setItemStatus = function(index, newStatus)
                 {console.log('Task ' + index + ' got new status ' + newStatus )};
 
                 var instance = (<Item key={key}
                                       index={key}
-                                      data={{done: true, title: 'my first task'}}
-                                      setItemStatus ={setItemStatus}/>);
+                                      data={{done: isDone, title: 'my first task!'}}
+                                      setItemStatus = {setItemStatus}/>);
 
                 var renderer = TestUtils.createRenderer();
                 renderer.render(instance);
-                var actual = renderer.getRenderOutput().props.style;
-                var expected = {textDecoration: "line-through"};
-                expect(actual).toEqual(expected);
+                return renderer.getRenderOutput().props.style;
+            }
+
+            it('should be without line-through decoration when not done', function () {
+                expect(getStyleofRenderedToDoItem(false)).toEqual({textDecoration: "none"});
+            });
+
+            it('should be with line-through decoration when done', function () {
+                expect(getStyleofRenderedToDoItem(true)).toEqual({textDecoration: "line-through"});
+            });
+
+            it('should get defined callback', function () {
+                var renderer = TestUtils.createRenderer();
+                renderer.render(getDemoItemInstance());
+                var props = renderer.getRenderOutput().props;
+                expect(props.onClick).toBeDefined();
             });
         });
 
