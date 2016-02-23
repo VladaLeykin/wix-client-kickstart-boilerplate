@@ -11,7 +11,6 @@ define([ 'lodash', 'React', 'reactDOM', 'components/component/Item'],
 
             beforeEach(function() {
                 spyOn(parentMock, 'setItemStatus');
-
             });
 
 
