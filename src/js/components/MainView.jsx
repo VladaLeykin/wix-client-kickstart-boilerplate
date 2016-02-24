@@ -3,9 +3,10 @@ define(['lodash', 'react', 'reactDOM', 'router',
         'components/component/SignUp',
         'components/component/LoggedIn',
         'components/component/LogIn',
-        'components/component/SignUpLogIn'],
+        'components/component/SignUpLogIn',
+        'components/logic/keyValueStorage'],
     function (_, React, ReactDOM, ReactRouter,
-              AppToDo, SignUp, LoggedIn, LogIn, SignUpLogIn) {
+              AppToDo, SignUp, LoggedIn, LogIn, SignUpLogIn, keyValueStorage) {
         'use strict';
 
         var Router = ReactRouter.Router;
@@ -202,26 +203,6 @@ define(['lodash', 'react', 'reactDOM', 'router',
          });
          */
 
-        var keyValueStorage = {
-            save(key, value)
-            {
-                localStorage.setItem(key, value);
-            },
-            remove(key)
-            {
-                localStorage.removeItem(key);
-            },
-            get(key)
-            {
-                return localStorage.getItem(key);
-            },
-            hasKey(key)
-            {
-                var value = localStorage.getItem(key);
-                return (value !== null && value !== undefined);
-            }
-        }
-
         var App = React.createClass({
             render: function () {
                 return (
@@ -248,6 +229,7 @@ define(['lodash', 'react', 'reactDOM', 'router',
                                 <Route path="loggedin" storage={keyValueStorage} component={LoggedIn}/>
                             </Route>
                             <Route path="/todo" component={AppToDo}/>
+                            <Route path="/todo" component={Modal}/>
                         </Route>
                     </Router>
                 );
