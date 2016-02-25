@@ -4,9 +4,10 @@ define(['lodash', 'react', 'reactDOM', 'router',
         'components/component/LoggedIn',
         'components/component/LogIn',
         'components/component/SignUpLogIn',
-        'components/logic/keyValueStorage'],
+        'components/logic/keyValueStorage',
+        'components/component/ModalOwner'],
     function (_, React, ReactDOM, ReactRouter,
-              AppToDo, SignUp, LoggedIn, LogIn, SignUpLogIn, keyValueStorage) {
+              AppToDo, SignUp, LoggedIn, LogIn, SignUpLogIn, keyValueStorage, ModalOwner) {
         'use strict';
 
         var Router = ReactRouter.Router;
@@ -208,9 +209,12 @@ define(['lodash', 'react', 'reactDOM', 'router',
                 return (
                     <div>
                         <h1>React Tests Week</h1>
-                        <Link to="/login">Login</Link>
-                        <br/>
-                        <Link to="/todo">Todo App</Link>
+                        <ul>
+                            <li><Link to="/login">Login</Link></li>
+                            <li><Link to="/todo">Todo App</Link></li>
+                            <li><Link to="/modal">Modal</Link></li>
+                        </ul>
+                        <hr/>
                         {this.props.children}
                     </div>
                 );
@@ -229,7 +233,7 @@ define(['lodash', 'react', 'reactDOM', 'router',
                                 <Route path="loggedin" storage={keyValueStorage} component={LoggedIn}/>
                             </Route>
                             <Route path="/todo" component={AppToDo}/>
-                            <Route path="/todo" component={Modal}/>
+                            <Route path="/modal" component={ModalOwner}/>
                         </Route>
                     </Router>
                 );
